@@ -1,40 +1,28 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-#
-# See https://github.com/r-lib/actions/tree/master/examples#readme for
-
-name: R_demo_1
+name: penguins-have-long-noses
 on: [push]
 jobs:
   run:
     runs-on: [ubuntu-latest]
-    container: docker://dvcorg/cml-py3:latest
+    container: docker://dvcorg/cml:latest
     steps:
       - uses: actions/checkout@v2
       
-      - name: Setup R 
+      - name: Setup R
         uses: r-lib/actions/setup-r@master
         
-      - name: Install dependencies
+      - name: Setup dependencies
         run: |
-          R -e 'install.packages("renv")'
+          R -e 'install.packages("renv")' 
           R -e 'renv::restore()'
-      - name: hello
-        run: |
-          R -e 'print("hello")' 
-          R -e 'print("get present work path: ")'
-          R -e 'getwd()'
-          R -e 'list.files(path = "./")'
           
-      - name: plot
-        env:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Analyze some penguin beaks
+        env: 
+          repo_token: ${{ secrets.GITHUB_TOKEN }} 
         run: |
-          R -e 'renv::run("script1_plot.R")'
-          # add a plot
-          cml-publish my_penguin_plot.png --md > report.md
-          # add talbe
-          cat mymodel.hmtl >> report.md
+          R -e 'renv::run("penguin_analysis.R")'
+          # Add picture
+          cml-publish my_penguin_plot.png --md > report.md 
+          # Add table
+          cat mymodel.html >> report.md
+          # Send report
           cml-send-comment report.md
