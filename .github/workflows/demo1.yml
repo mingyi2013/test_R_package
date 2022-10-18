@@ -37,3 +37,12 @@ jobs:
       - name: hello
         run: |
           R -e 'print("hello")' 
+      - name: plot
+        env:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          R -e 'renv::run("script1_plot.R")'
+          # add a plot
+          cml-publish my_penguin_plot.png --md > report.md
+          # add talbe
+          cml-send-comment report.md
