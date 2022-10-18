@@ -19,7 +19,7 @@ jobs:
         env: 
           repo_token: ${{ secrets.GITHUB_TOKEN }} 
         run: |
-          R -e 'renv::run("penguin_analysis.R")'
+          R -e 'renv::run("script1_plot.R")'
           # Add picture
           cml-publish my_penguin_plot.png --md > report.md 
           # Add table
