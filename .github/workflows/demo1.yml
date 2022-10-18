@@ -37,15 +37,16 @@ jobs:
         run: |
           R -e 'print("hello")' 
           R -e 'print("get present work path: ")'
-          R -e getwd()
-          R -e list.files(path = "./")
+          R -e 'getwd()'
+          R -e 'list.files(path = "./")'
           
       - name: plot
         env:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          R -e 'renv::run("script1_plot.R")'
+          R -e 'run("script1_plot.R")'
           # add a plot
           cml-publish my_penguin_plot.png --md > report.md
           # add talbe
+          cat mymodel.hmtl >> report.md
           cml-send-comment report.md
