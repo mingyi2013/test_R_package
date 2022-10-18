@@ -13,10 +13,10 @@ jobs:
     container: docker://dvcorg/cml-py3:latest
     steps:
       - uses: actions/checkout@v2
-      - name: Set up R 
+      
+      - name: Setup R 
         uses: r-lib/actions/setup-r@master
-        with:
-          r-version: ${{ matrix.r-version }}
+        
       - name: Install dependencies
         run: |
           R -e 'install.packages("renv")'
