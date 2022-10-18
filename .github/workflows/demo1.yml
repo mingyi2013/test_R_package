@@ -36,6 +36,10 @@ jobs:
       - name: hello
         run: |
           R -e 'print("hello")' 
+          R -e 'print("get present work path: ")'
+          R -e getwd()
+          R -e list.files(path = "./")
+          
       - name: plot
         env:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
